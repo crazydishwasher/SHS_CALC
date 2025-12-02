@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frost-sikringskalkulator</title>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f6f7f8;
+      color: #1b1b1b;
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 700px;
+      margin: 32px auto;
+      padding: 24px;
+      background: #ffffff;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+      border-radius: 12px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    p.lead {
+      margin: 0 0 16px;
+      color: #444;
+    }
+    form {
+      display: grid;
+      gap: 14px;
+    }
+    .grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d5d7da;
+      border-radius: 8px;
+      font: inherit;
+      background: #fbfbfc;
+    }
+    input[type="number"]:focus {
+      outline: 2px solid #2d6cdf;
+      border-color: #2d6cdf;
+      background: #ffffff;
+    }
+    .radio-group {
+      display: grid;
+      gap: 8px;
+    }
+    .option {
+      border: 1px solid #d5d7da;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fbfbfc;
+    }
+    .option input {
+      margin-right: 8px;
+    }
+    .price-input {
+      margin-top: 8px;
+      display: none;
+    }
+    details {
+      border: 1px dashed #d5d7da;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fafafa;
+    }
+    summary {
+      font-weight: 700;
+      cursor: pointer;
+      list-style: none;
+    }
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    button {
+      cursor: pointer;
+      padding: 12px 16px;
+      background: #2d6cdf;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 160ms ease;
+    }
+    button:hover {
+      background: #255bc0;
+      box-shadow: 0 6px 18px rgba(45,108,223,0.24);
+    }
+    button:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+    .results {
+      margin-top: 16px;
+      border-top: 1px solid #e2e4e8;
+      padding-top: 16px;
+      display: grid;
+      gap: 10px;
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .label {
+      color: #444;
+      font-weight: 600;
+    }
+    .value {
+      font-weight: 700;
+      color: #111;
+    }
+    .muted {
+      color: #666;
+      font-weight: 500;
+    }
+    @media (max-width: 540px) {
+      .wrap {
+        margin: 16px;
+        padding: 18px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Frost-sikringskalkulator</h1>
+    <p class="lead">Se hvor mye du kan spare per år ved å fryse ned hytta med SHS heating pads.</p>
+
+    <form id="calc-form">
+      <div class="grid">
+        <div>
+          <label for="size">Hyttestørrelse (m²)</label>
+          <input type="number" id="size" min="1" value="80" step="1">
+        </div>
+        <div>
+          <label for="months">Vintermåneder</label>
+          <input type="number" id="months" min="1" value="4" step="1">
+        </div>
+      </div>
+
+      <div>
+        <label>Strømpris</label>
+        <div class="radio-group" id="price-options">
+          <label class="option">
+            <input type="radio" name="priceChoice" value="norgespris" checked>
+            Norgespris 0,50 kr/kWh
+          </label>
+          <label class="option">
+            <input type="radio" name="priceChoice" value="custom">
+            Tilpasset pris
+            <div class="price-input">
+              <input type="number" id="customPrice" min="0" step="0.01" value="0.90" placeholder="kr/kWh">
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <details>
+        <summary>Avansert</summary>
+        <div style="margin-top:10px;">
+          <label for="kwhPerM2">kWh per m² ved 10°C</label>
+          <input type="number" id="kwhPerM2" min="0" step="0.1" value="62.5">
+        </div>
+      </details>
+
+      <button type="button" id="calc-btn">Beregn besparelse</button>
+
+      <div class="results" id="results">
+        <div class="result-row">
+          <span class="label">Estimert årlig besparelse</span>
+          <span class="value" id="saving">–</span>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    (function() {
+      const priceOptions = document.querySelectorAll('input[name="priceChoice"]');
+      const priceInputs = document.querySelectorAll('.price-input');
+
+      function formatCurrency(value) {
+        return new Intl.NumberFormat('nb-NO', { style: 'currency', currency: 'NOK', maximumFractionDigits: 0 }).format(Math.round(value));
+      }
+
+      function formatNumber(value) {
+        return new Intl.NumberFormat('nb-NO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
+      }
+
+      function getPricePerKWh() {
+        const choice = document.querySelector('input[name="priceChoice"]:checked').value;
+        if (choice === 'norgespris') return 0.5;
+        if (choice === 'custom') return parseFloat(document.getElementById('customPrice').value) || 0;
+        return 0.5;
+      }
+
+      function togglePriceInputs() {
+        priceInputs.forEach(box => { box.style.display = 'none'; });
+        const choice = document.querySelector('input[name="priceChoice"]:checked');
+        const parent = choice ? choice.closest('.option') : null;
+        if (parent) {
+          const extra = parent.querySelector('.price-input');
+          if (extra) extra.style.display = 'block';
+        }
+      }
+
+      priceOptions.forEach(opt => opt.addEventListener('change', togglePriceInputs));
+      togglePriceInputs();
+
+      function calculate() {
+        const m2 = parseFloat(document.getElementById('size').value) || 0;
+        const months = parseFloat(document.getElementById('months').value) || 0;
+        const padCount = 3;
+        const padW = 20;
+        const kwhPerM2 = parseFloat(document.getElementById('kwhPerM2').value) || 0;
+        const price = getPricePerKWh();
+
+        const kWhTraditional = m2 * kwhPerM2;
+        const costTraditional = kWhTraditional * price;
+
+        const hours = 24 * 30 * months;
+        const kWhPads = ((padW / 1000) * padCount) * hours;
+        const costPads = kWhPads * price;
+
+        const saving = costTraditional - costPads;
+
+        document.getElementById('saving').textContent = saving > 0 ? formatCurrency(saving) : 'Ingen besparelse';
+      }
+
+      document.getElementById('calc-btn').addEventListener('click', calculate);
+      calculate();
+    })();
+  </script>
+</body>
+</html>
