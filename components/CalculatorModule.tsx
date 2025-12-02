@@ -513,7 +513,7 @@ function ResultStep({ state, setState, saving, kWhFrost, kWhPads, onRestart }: R
 
   return (
     <div className="form-block">
-      <div className="result-box" style={{ textAlign: "left" }}>
+      <div className="result-box" style={{ textAlign: "center", lineHeight: 1.55 }}>
         <p className="result-label" style={{ marginTop: 8 }}>Du kan spare omtrent</p>
         <p className="result-value" style={{ fontSize: "1.9rem", fontWeight: 700 }}>
           {formatted} kr per vinter
@@ -579,6 +579,15 @@ function ResultStep({ state, setState, saving, kWhFrost, kWhPads, onRestart }: R
           Beregn på nytt
         </button>
       </div>
+      <style jsx global>{`
+        .card > h1,
+        .card > .lead {
+          text-align: center;
+        }
+        .result-box .helper {
+          text-align: left;
+        }
+      `}</style>
     </div>
   );
 }
