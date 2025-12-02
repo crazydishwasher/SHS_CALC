@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
 :root {
   color-scheme: light;
-  --bg: #f6f7f8;
+  --bg: #f5f5f5;
   --card: #ffffff;
-  --border: #dfe3e7;
-  --text: #111827;
-  --muted: #4b5563;
-  --accent: #2563eb;
+  --border: #e5e5e5;
+  --text: #222222;
+  --muted: #444444;
+  --accent: #f47a20;
 }
 
 * {
@@ -14,10 +16,10 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .page {
@@ -25,29 +27,31 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px;
 }
 
 .card {
   width: 100%;
-  max-width: 460px;
+  max-width: 520px;
   position: relative;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
-  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.06);
+  padding: 36px 32px;
   text-align: center;
 }
 
 h1 {
-  margin: 0 0 8px;
-  font-size: 1.3rem;
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #222222;
   text-align: center;
 }
 
 p.lead {
-  margin: 0 0 16px;
+  margin: 0 0 20px;
   color: var(--muted);
   text-align: center;
 }
@@ -55,23 +59,22 @@ p.lead {
 button {
   cursor: pointer;
   border: none;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-weight: 700;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
   font-size: 1rem;
   background: var(--accent);
   color: #fff;
-  transition: transform 120ms ease, box-shadow 120ms ease, background 140ms ease;
+  transition: background 120ms ease, transform 120ms ease;
+  box-shadow: none;
 }
 
 button:hover {
-  background: #1f54c5;
-  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.25);
+  background: #d8681a;
 }
 
 button:active {
   transform: translateY(1px);
-  box-shadow: none;
 }
 
 button:disabled,
@@ -85,31 +88,32 @@ button:disabled,
   position: absolute;
   top: -12px;
   right: -12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(37, 99, 235, 0.1);
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: rgba(244, 122, 32, 0.12);
   color: var(--accent);
   font-weight: 700;
-  font-size: 0.85rem;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  font-size: 0.88rem;
+  border: 1px solid rgba(244, 122, 32, 0.25);
+  box-shadow: none;
 }
 
 .ghost-button {
-  background: transparent;
+  background: #ffffff;
   color: var(--accent);
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   box-shadow: none;
 }
 
 .ghost-button:hover {
-  background: rgba(37, 99, 235, 0.08);
+  background: rgba(244, 122, 32, 0.08);
   color: var(--accent);
   box-shadow: none;
 }
 
 .form-block {
   display: grid;
-  gap: 12px;
+  gap: 16px;
   text-align: center;
 }
 
@@ -122,33 +126,39 @@ label {
 
 input[type="number"] {
   width: 100%;
-  padding: 11px 12px;
+  padding: 12px 14px;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  background: #f9fafb;
+  border-radius: 12px;
+  background: #ffffff;
   font: inherit;
 }
 
 input[type="number"]:focus {
   outline: 2px solid var(--accent);
   border-color: var(--accent);
-  background: #fff;
+  background: #fff7f2;
 }
 
 .location-input {
   height: 52px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 12px 14px;
   background: #fff;
   font: inherit;
   font-size: 15px;
+  color: #222;
 }
 
 .location-input:focus {
-  outline: 2px solid #2563eb;
-  border-color: #2563eb;
-  background: #fff;
+  outline: 2px solid #f47a20;
+  border-color: #f47a20;
+  background: #fff7f2;
+}
+
+input::placeholder,
+.location-input::placeholder {
+  color: #999999;
 }
 
 .radio-group {
@@ -168,7 +178,7 @@ input[type="number"]:focus {
   padding: 14px 12px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: #f9fafb;
+  background: #fafafa;
   color: var(--text);
   font-weight: 700;
   cursor: pointer;
@@ -177,8 +187,8 @@ input[type="number"]:focus {
 
 .option-button.active {
   border-color: var(--accent);
-  background: rgba(37, 99, 235, 0.08);
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.12);
+  background: rgba(244, 122, 32, 0.12);
+  box-shadow: 0 8px 16px rgba(244, 122, 32, 0.12);
 }
 
 .option-button:active {
@@ -191,13 +201,14 @@ input[type="number"]:focus {
 
 .helper {
   margin-top: 6px;
-  color: var(--muted);
-  font-size: 0.9rem;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .result-label {
   margin: 0 0 4px 0;
-  color: #4b5563;
+  color: #555;
   font-size: 1rem;
 }
 
@@ -212,7 +223,7 @@ input[type="number"]:focus {
   margin-top: 8px;
   padding: 10px 12px;
   border-radius: 10px;
-  background: rgba(37, 99, 235, 0.08);
+  background: rgba(244, 122, 32, 0.12);
   color: var(--accent);
   font-weight: 600;
 }
@@ -253,7 +264,7 @@ input[type="number"]:focus {
   padding: 12px 14px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #f9fafb;
+  background: #fafafa;
   display: grid;
   gap: 10px;
   transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
@@ -261,8 +272,8 @@ input[type="number"]:focus {
 
 .option-card--active {
   border-color: var(--accent);
-  background: rgba(37, 99, 235, 0.08);
-  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.12);
+  background: rgba(244, 122, 32, 0.12);
+  box-shadow: 0 8px 16px rgba(244, 122, 32, 0.12);
 }
 
 .option-header {
@@ -279,11 +290,11 @@ input[type="number"]:focus {
 .actions {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 @media (max-width: 540px) {
   .card {
-    padding: 18px;
+    padding: 20px;
   }
 }

@@ -248,13 +248,14 @@ function LocationStep({ state, setState, onBack, onNext }: StepProps) {
             {results.length > 0 && (
               <div
                 style={{
-                  marginTop: 10,
-                  border: "1px solid #E5E7EB",
-                  borderRadius: 8,
+                  marginTop: 12,
+                  border: "1px solid #e5e5e5",
+                  borderRadius: 14,
                   maxHeight: 200,
                   overflowY: "auto",
                   background: "#fff",
                   padding: 0,
+                  boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
                 }}
               >
                 {results.map((r) => (
@@ -266,17 +267,17 @@ function LocationStep({ state, setState, onBack, onNext }: StepProps) {
                       display: "block",
                       width: "100%",
                       textAlign: "left",
-                      padding: "12px 14px",
+                      padding: "12px 16px",
                       border: "none",
                       background: "transparent",
                       cursor: "pointer",
                       fontSize: 15,
                       color: "#1F2937",
-                      borderBottom: "1px solid #F3F4F6",
+                      borderBottom: "1px solid #f0f0f0",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#F3F8FF";
-                      e.currentTarget.style.color = "#2563EB";
+                      e.currentTarget.style.background = "#FAF7F5";
+                      e.currentTarget.style.color = "#F47A20";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = "transparent";
@@ -521,7 +522,7 @@ function ResultStep({ state, setState, saving, kWhFrost, kWhPads, onRestart }: R
         <p
           className="helper"
           style={{
-            color: "#6B7280",
+            color: "#444",
             marginTop: 10,
             maxWidth: 520,
             lineHeight: 1.5,
@@ -536,11 +537,8 @@ function ResultStep({ state, setState, saving, kWhFrost, kWhPads, onRestart }: R
           className="ghost-button"
           style={{
             marginTop: 22,
-            padding: "8px 10px",
-            borderRadius: 8,
-            background: "transparent",
-            border: "1px solid #dfe3e7",
-            color: "#2563eb",
+            padding: "10px 12px",
+            borderRadius: 10,
           }}
           onClick={() => setShowDetails((prev) => !prev)}
         >
@@ -551,8 +549,9 @@ function ResultStep({ state, setState, saving, kWhFrost, kWhPads, onRestart }: R
               style={{
               marginTop: 16,
               padding: 20,
-              borderRadius: 12,
-              background: "#F6F6F7",
+              borderRadius: 16,
+              background: "#F7F7F7",
+              border: "1px solid #E5E5E5",
               textAlign: "left",
               color: "#111",
               lineHeight: 1.5,
